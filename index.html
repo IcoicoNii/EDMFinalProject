@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nestle Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/script.js"></script>
+</head>
+
+<body>
+    <!-- Pages -->
+    <!-- Landing Page -->
+    <div id="home" class="w-full min-h-[100dvh] flex flex-row flex-wrap justify-center items-center p-[20px] gap-10">
+        <img src="assets/img/Nestlé.svg.png"
+            class="w-full h-auto max-w-[500px] min-w-[100px] md:max-w-[400px] lg:max-w-[500px] drop-shadow-xl" alt="">
+
+        <div id="right-outer-side"
+            class="w-[100%] max-w-[550px] min-w-[300px] flex flex-col items-end justify-center rounded-lg p-4">
+
+            <h1 id="gfgl" class="w-full text-center mb-2">Good Food, Good Life.</h1>
+
+            <div id="right-side"
+                class="w-[100%] max-w-[550px] min-w-[300px] flex flex-col items-end justify-center shadow-lg rounded-lg p-4">
+
+                <!-- CAROUSEL -->
+                <div class="w-full flex justify-center items-center h-[350px] bg-gray-100 rounded-lg">
+                    <div id="carousel-container" class="relative w-full max-w-2xl overflow-hidden rounded-lg shadow-xl">
+                        <div id="carousel-slides" class="flex transition-transform duration-500 ease-in-out">
+                            <div id ="slide-1"
+                                class="flex-shrink-0 w-full h-[350px] bg-blue-500 flex items-center justify-center text-white text-3xl">
+                                </div>
+                            <div id ="slide-2"
+                                class="flex-shrink-0 w-full h-[350px] bg-green-500 flex items-center justify-center text-white text-3xl">
+                                </div>
+                            <div id ="slide-3"
+                                class="flex-shrink-0 w-full h-[350px] bg-red-500 flex items-center justify-center text-white text-3xl">
+                                </div>
+                            <div id ="slide-4"
+                                class="flex-shrink-0 w-full h-[350px] bg-red-500 flex items-center justify-center text-white text-3xl">
+                                </div>
+                            <div id ="slide-5"
+                                class="flex-shrink-0 w-full h-[350px] bg-red-500 flex items-center justify-center text-white text-3xl">
+                                </div>
+                            <div id ="slide-6"
+                                class="flex-shrink-0 w-full h-[350px] bg-red-500 flex items-center justify-center text-white text-3xl">
+                                </div>
+                        
+                            </div>
+
+                        <button id="prev-button"
+                            class="absolute top-1/2 left-1 -translate-y-1/2 bg-[] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 focus:outline-none">
+                            &#10094;
+                        </button>
+                        <button id="next-button"
+                            class="absolute top-1/2 right-1 -translate-y-1/2 bg-[] bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 focus:outline-none">
+                            &#10095;
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- BUTTON -->
+            <!-- From Uiverse.io by adamgiebl -->
+            <button class="cssbuttons-io-button mt-4 items-center justify-center w-full max-w-[300px]">
+                Go to Dashboard
+                <div class="icon">
+                    <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                            fill="currentColor"></path>
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div id="dashboard"
+        class="w-full min-h-[100dvh] flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
+        <div class="grid-container">
+            <div class="grid-item header-top-left">Top Left</div>
+            <div class="grid-item header-top-middle-1">Top Middle 1</div>
+            <div class="grid-item header-top-right">Top Right</div>
+            <div class="grid-item left-middle-1">Left Middle 1</div>
+            <div class="grid-item header-middle-middle-2">Header Middle 2</div>
+            <div class="grid-item right-middle-1">Right Middle 1</div>
+            <div class="grid-item left-middle-2">Left Middle 2</div>
+            <div class="grid-item center-main">Main Content Area</div>
+            <div class="grid-item right-middle-2">Right Middle 2</div>
+            <div class="grid-item bottom-middle">Bottom Middle</div>
+            <div class="grid-item bottom-right">Bottom Right</div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
