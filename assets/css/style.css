@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* * {
     outline: 1px solid red !important;
 } */
@@ -63,6 +67,20 @@ body {
     background-color: rgba(255, 255, 255, 0.238);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+#navbar {
+    background-image: linear-gradient(to right,  #95dcf4, #4e6dd4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0.5px 10px rgba(0, 0, 0, 0.682);
+    border-radius: 0 0 20px 20px;
+}  
+
+footer{
+    background-image: linear-gradient(to right,  #95dcf4, #4e6dd4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0.5px 10px rgba(0, 0, 0, 0.682);
+    border-radius: 20px 20px 0 0;
 }
 
 /* From Uiverse.io by adamgiebl */
@@ -140,18 +158,19 @@ body {
 
 
 .grid-container {
+    border: solid;
     display: grid;
     gap: 10px;
+    margin-top: 80px;
     /* Space between grid items */
-    margin: 20px;
-    width: auto;
-    /* Adjust as needed */
-    background-color: white;
+    width: 100%;
+    min-height:83dvh;
+        /* Adjust as needed */
+    /* background-color: white; */
     border: 1px solid #ccc;
     /* Overall container border */
     box-sizing: border-box;
     /* Include padding and border in the element's total width and height */
-    height: 90%;
 
 
     /* Define grid columns and rows */
