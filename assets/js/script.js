@@ -65,5 +65,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     resizeObserver.observe(carouselContainer);
 });
-
-

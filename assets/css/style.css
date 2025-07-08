@@ -26,32 +26,37 @@ body {
     flex-direction: column;
 }
 
-#slide-1{
+#slide-1 {
     background-image: url('/assets/img/carousel-items/1.png');
     background-size: cover;
     background-position: center;
 }
-#slide-2{
+
+#slide-2 {  
     background-image: url('/assets/img/carousel-items/2.png');
     background-size: cover;
     background-position: center;
 }
-#slide-3{
+
+#slide-3 {
     background-image: url('/assets/img/carousel-items/3.png');
     background-size: cover;
     background-position: center;
 }
-#slide-4{
+
+#slide-4 {
     background-image: url('/assets/img/carousel-items/4.png');
     background-size: cover;
     background-position: center;
 }
-#slide-5{
+
+#slide-5 {
     background-image: url('/assets/img/carousel-items/5.png');
     background-size: cover;
     background-position: center;
 }
-#slide-6{
+
+#slide-6 {
     background-image: url('/assets/img/carousel-items/6.png');
     background-size: cover;
     background-position: center;
@@ -70,14 +75,14 @@ body {
 }
 
 #navbar {
-    background-image: linear-gradient(to right,  #95dcf4, #4e6dd4);
+    background-image: linear-gradient(to right, #95dcf4, #4e6dd4);
     backdrop-filter: blur(10px);
     box-shadow: 0 0.5px 10px rgba(0, 0, 0, 0.682);
     border-radius: 0 0 20px 20px;
-}  
+}
 
-footer{
-    background-image: linear-gradient(to right,  #95dcf4, #4e6dd4);
+footer {
+    background-image: linear-gradient(to right, #95dcf4, #4e6dd4);
     backdrop-filter: blur(10px);
     box-shadow: 0 0.5px 10px rgba(0, 0, 0, 0.682);
     border-radius: 20px 20px 0 0;
@@ -140,23 +145,6 @@ footer{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .grid-container {
     border: solid;
     display: grid;
@@ -164,8 +152,8 @@ footer{
     margin-top: 80px;
     /* Space between grid items */
     width: 100%;
-    min-height:83dvh;
-        /* Adjust as needed */
+    min-height: 83dvh;
+    /* Adjust as needed */
     /* background-color: white; */
     border: 1px solid #ccc;
     /* Overall container border */
@@ -181,17 +169,16 @@ footer{
 }
 
 .grid-item {
-    border: 1px solid black;
-    /* Border for each grid item */
-    padding: 15px;
-    /* Inner padding */
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #f9f9f9;
-    box-sizing: border-box;
-    text-align: center;
-    border-radius: 5px;
+    /* Add some space from the top if needed */
+
 }
 
 /* Assign grid areas based on the image layout */
