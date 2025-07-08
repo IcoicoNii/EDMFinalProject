@@ -51,21 +51,30 @@ def render_chart_template(chart_html, title="Chart"):
         <head>
             <title>{{ title }}</title>
             <style>
-                body {
+                
+                
+
+                html, body {
                     margin: 0;
                     padding: 0;
                     overflow: hidden;
-                    background-color: #f9f9f9; /* Match grid-item bg */
-                    height: 100vh; /* Ensure body takes full iframe height */
-                    width: 100vw;  /* Ensure body takes full iframe width */
+                    height: 100%; /* Ensure body takes full iframe height */
+                    width: 100%;  /* Ensure body takes full iframe width */
                     display: flex; /* Use flexbox to center chart if needed */
                     justify-content: center;
                     align-items: center;
                 }
                 .plotly-container {
+                                  
+                 
                     width: 100%;
                     height: 100%;
-                    /* Ensure this container also takes full available space */
+                    display: flex; /* Makes the chart's container a flex container */
+                    justify-content: center; /* Centers content horizontally within the plotly-container */
+                    align-items: center; /* Centers content vertically within the plotly-container */
+                
+                                  
+                                  
                 }
             </style>
         </head>
@@ -133,7 +142,7 @@ def three_year_sales_trend_chart():
     # Removed .interactive() method
     layered_chart = alt.layer(bars, value_text).properties(
         width=alt.Step(14), # Use alt.Step for width in faceted charts to control individual facet width
-        height='container'  # Use 'container' to make it responsive
+        height=150
     )
 
     # Facet the layered chart by Product Name
@@ -141,12 +150,12 @@ def three_year_sales_trend_chart():
         column=alt.Column('Product Name:N', header=alt.Header(titleOrient="bottom", labelOrient="bottom"))
     ).properties(
         # Title of the chart
-        title='Three Year Sales Trend for Each Product',
+        title='Three Year Sales Trend for Each Product'
     )
 
     # Convert the Altair chart to HTML.
     # Set 'actions': False to hide the default menu for save/zoom.
-    chart_html = final_chart.to_html(embed_options={'actions': False}) # <--- Changed to False
+    chart_html = final_chart.to_html(embed_options={'actions': False, 'autosize': 'fit'}) # <--- Changed to False
 
     return render_chart_template(chart_html, "Three Year Sales Trend for Each Product")
 

@@ -32,7 +32,7 @@ body {
     background-position: center;
 }
 
-#slide-2 {  
+#slide-2 {
     background-image: url('/assets/img/carousel-items/2.png');
     background-size: cover;
     background-position: center;
@@ -160,12 +160,13 @@ footer {
     box-sizing: border-box;
     /* Include padding and border in the element's total width and height */
 
-
     /* Define grid columns and rows */
     grid-template-columns: 1fr 2fr 1fr;
-    /* Three columns: left (1 unit), middle (2 units), right (1 unit) */
-    grid-template-rows: auto auto auto auto;
-    /* Four rows, height determined by content */
+    /* Make the rows flexible and take up available space */
+    /* Example: 1st row auto, 2nd row 1 fraction, 3rd row (where center-main is) 2 fractions, 4th row 1 fraction */
+    grid-template-rows: auto 1fr 2fr 1fr;
+    min-height: 83dvh;
+    /* This needs to be set for 'fr' units to have space to distribute */
 }
 
 .grid-item {
@@ -215,7 +216,7 @@ footer {
 .center-main {
     grid-column: 2 / 3;
     grid-row: 3 / 4;
-    min-height: 200px;
+    /* min-height: 200px; */
     /* Example height for the main content area */
 }
 
