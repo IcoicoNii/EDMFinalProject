@@ -65,3 +65,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     resizeObserver.observe(carouselContainer);
 });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/kpi_data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error fetching KPI data:', data.error);
+                        document.getElementById('kpi-total-revenue').innerText = 'N/A';
+                        document.getElementById('kpi-average-revenue').innerText = 'N/A';
+                        document.getElementById('kpi-total-products').innerText = 'N/A';
+                        document.getElementById('kpi-total-sales').innerText = 'N/A';
+                    } else {
+                        document.getElementById('kpi-total-revenue').innerText = data.total_revenue;
+                        document.getElementById('kpi-average-revenue').innerText = data.average_revenue;
+                        document.getElementById('kpi-total-products').innerText = data.total_unique_products;
+                        document.getElementById('kpi-total-sales').innerText = data.total_sales_count;
+                    }
+                })
+                .catch(error => {
+                    console.error('Network or parsing error:', error);
+                    document.getElementById('kpi-total-revenue').innerText = 'Error';
+                    document.getElementById('kpi-average-revenue').innerText = 'Error';
+                    document.getElementById('kpi-total-products').innerText = 'Error';
+                    document.getElementById('kpi-total-sales').innerText = 'Error';
+                });
+        });
