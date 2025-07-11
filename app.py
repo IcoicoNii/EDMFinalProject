@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string, render_template, jsonify # Ensure render_template is here
+from flask import Flask, request, render_template_string, render_template, jsonify # Ensure render_template is here
 import pandas as pd
 import os
 import plotly.graph_objects as go
@@ -61,15 +61,21 @@ nestle_colors = {
     'zero_line_color': '#BBBBBB', # Medium light grey for zero line
     'legend_text_color': '#555555', # Medium dark grey for legend text
     'hover_bg_color': '#333333', # Dark background for hover tooltips
-    'hover_text_color': '#FFFFFF' # White text for hover tooltips
+    'hover_text_color': '#FFFFFF', # White text for hover tooltips
+
+    # NEW COLORS FOR FORECAST CHART
+    'forecast_historical_line': '#007BFF', # Blue for historical data line
+    'forecast_line': '#DC3545', # Red for forecast line
+    'forecast_fill': 'rgba(220,53,69,0.1)' # Light red fill for prediction interval
 }
+
 
 app = Flask(__name__, static_folder='assets') # <--- ADD static_folder='assets'
 
 # --- Configuration for Data File ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXCEL_FILE_PATH = os.path.join(BASE_DIR, 'assets', 'data', 'nestle_sales_data.xlsx')
-GEOJSON_FILE_PATH = os.path.join(BASE_DIR, 'assets', 'data', 'my_australian_states.json') # Path to your NEW GeoJSON file
+GEOJSON_FILE_PATH = os.path.join(BASE_DIR, 'assets', 'data', 'australian-states.geojson') # Path to your NEW GeoJSON file
 
 df = None
 geojson_data = None # Initialize geojson_data globally
@@ -118,7 +124,6 @@ def load_geojson_data():
 with app.app_context():
     load_data()
     load_geojson_data()
-
 
 # --- Helper function for rendering chart HTML ---
 def render_chart_template(chart_html, title="Chart"):
@@ -574,12 +579,16 @@ def kpi_data():
         average_revenue = df['Total Revenue'].mean()
         total_unique_products = df['Product Name'].nunique() # Number of unique product names
         total_sales_count = df['Sales Count'].sum() # Sum of the 'Sales Count' column
+        max_revenue = df['Total Revenue'].max()
+        min_revenue = df['Total Revenue'].min()
 
         kpis = {
             "total_revenue": f"${total_revenue:,.2f}",
             "average_revenue": f"${average_revenue:,.2f}",
             "total_unique_products": f"{total_unique_products:,}",
-            "total_sales_count": f"{total_sales_count:,}"
+            "total_sales_count": f"{total_sales_count:,}",
+            "max_revenue": f"${max_revenue:,.2f}",
+            "min_revenue": f"${min_revenue:,.2f}"
         }
         return jsonify(kpis)
     except KeyError as ke:
@@ -669,22 +678,121 @@ def monthly_revenue_forecast_sarimax_chart():
             y2='Upper Bound:Q',
             tooltip=[alt.Tooltip('Date:T', format='%b %Y'), alt.Tooltip('Lower Bound:Q', title='Lower Bound', format='$,.2f'), alt.Tooltip('Upper Bound:Q', title='Upper Bound', format='$,.2f')]
         )
+        
+        # Combine the layers
+        chart = alt.layer(historical_line, forecast_line, prediction_interval).properties(
+            title='Monthly Revenue Forecast (Exponential Smoothing)',
+            width='container', # Make chart responsive to container width
+            height=200
+        ).interactive() # Make the chart interactive (zoom, pan)
 
-        # Combine charts
-        chart = (historical_line + forecast_line + prediction_interval).properties(
-            title='Monthly Revenue Forecast with 95% Prediction Interval'
-        ).interactive()
-
-        # Increase chart width
-        chart = chart.properties(width=800) # Adjust the width as needed
-
-        chart_html = chart.to_html(full_html=False, config={'actions': False, 'autosize': 'fit'})
+        # Convert the Altair chart to HTML
+        chart_html = chart.to_html(embed_options={'actions': False, 'autosize': 'fit'})
+        print("DEBUG: Chart HTML generated successfully.")
         return render_chart_template(chart_html, "Monthly Revenue Forecast")
 
     except Exception as e:
         print(f"DEBUG: An error occurred during monthly_revenue_forecast_sarimax_chart generation: {e}")
         return f"<div>Error generating Monthly Revenue Forecast chart: {e}</div>", 500
 
+@app.route('/chart/sales_by_location_map')
+def sales_by_location_map():
+    """
+    Generates a choropleth map of Australia showing total revenue by state.
+    Includes formatted revenue values in tooltips and popups.
+    Allows for dynamic height and width modifications via URL parameters.
+    """
+    if df.empty or geojson_data is None:
+        return "<div>Error: Data or GeoJSON not loaded or available for Sales Location Map.</div>", 500
+
+    # Aggregate total revenue by 'Sales Location'
+    # Ensure 'Sales Location' column exists in your DataFrame
+    if 'Sales Location' not in df.columns:
+        return "<div>Error: 'Sales Location' column not found in data. Cannot generate map.</div>", 500
+
+    sales_by_location = df.groupby('Sales Location')['Total Revenue'].sum().reset_index()
+
+    # Function to format revenue for readability (K for thousands, M for millions)
+    def format_revenue_for_map(revenue):
+        if pd.isna(revenue):
+            return "N/A"
+        if revenue >= 1_000_000:
+            return f'${revenue/1_000_000:,.2f}M'
+        elif revenue >= 1_000:
+            return f'${revenue/1_000:,.2f}K'
+        else:
+            return f'${revenue:,.2f}'
+
+    # Get height and width from query parameters, with default values
+    # You can specify units (e.g., '100%', '800px')
+    map_height = request.args.get('height', '100%')  # Default height
+    map_width = request.args.get('width', '100%')    # Default width
+
+    # Create a base map of Australia
+    australia_map = folium.Map(
+        location=[-25, 135],
+        zoom_start=3,
+        control_scale=True,
+        height=map_height,  # Apply height
+        width=map_width     # Apply width
+    )
+
+    # Add the GeoJSON layer with the sales data
+    choropleth = folium.Choropleth(
+        geo_data=geojson_data,
+        name='choropleth',
+        data=sales_by_location,
+        columns=['Sales Location', 'Total Revenue'],
+        key_on='feature.properties.STATE_NAME',
+        fill_color='YlGn',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        # --- MODIFICATION START: Move colorbar to the middle ---
+        colorbar_kwargs={
+            'position': (0, 0), # (left, bottom) - Adjust these values for bottom-left. 0,0 is typically the bottom-left corner.
+            'min_width': 100,
+            'max_width': 100,
+            'min_height': 300,
+            'max_height': 300,
+            'relative': True
+        }
+        # --- MODIFICATION END ---
+    ).add_to(australia_map)
+
+    # Add tooltips to display formatted revenue on hover
+    choropleth.geojson.add_child(
+        folium.features.GeoJsonTooltip(
+            fields=['STATE_NAME'],
+            aliases=['State:'],
+            localize=True,
+            labels=True,
+            sticky=True,
+            style=("background-color: white; color: #333333; font-family: arial; font-size: 12px; padding: 6px;")
+        )
+    )
+
+    # Add popups with formatted revenue on click
+    for feature in geojson_data['features']:
+        state_name = feature['properties'].get('STATE_NAME')
+        if state_name:
+            sales_data_row = sales_by_location[sales_by_location['Sales Location'] == state_name]
+            if not sales_data_row.empty:
+                total_revenue = sales_data_row.iloc[0]['Total Revenue']
+                formatted_revenue = format_revenue_for_map(total_revenue)
+                popup_text = f"<b>{state_name}</b><br>Total Revenue: {formatted_revenue}"
+
+                folium.GeoJson(
+                    feature,
+                    tooltip=f"{state_name}",
+                    popup=folium.Popup(popup_text)
+                ).add_to(australia_map)
+
+    # Add layer control to toggle choropleth (optional)
+    folium.LayerControl().add_to(australia_map)
+
+    # Convert the Folium map to HTML
+    map_html = australia_map._repr_html_()
+    return render_chart_template(map_html, "Sales Distribution by Location")
 
 
 

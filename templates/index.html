@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nestle Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/script.js"></script>
     <!-- 🖋️ Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+
 
     <!-- 🎨 Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -138,11 +140,38 @@
 
 
     <!-- DASHBOARD -->
-    <div id="dashboard" class="w-full flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
+    <div id="dashboard" class="w-full flex flex-row flex-wrap justify-center items-center p-[20px] gap-5">
         <div class="grid-container">
 
-            <div class="grid-item header-top-left">
-                header top left
+            <div class="grid-item header-top-left flex flex-row flex-wrap justify-center items-center">
+                <div class="flex w-[95%] gap-2 justify-center items-center">
+                    <div
+                        class="w-[50%] border border-gray-400 rounded-lg text-center p-2 py-6 flex flex-col items-center justify-center">
+                        <p class="text-sm text-gray-600">Maximum Revenue</p>
+                        <div class="text-center max flex-1 text-xl font-bold text-blue-800 flex flex-row items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-5 h-5 inline-block align-middle text-green-500 mr-2">
+                                <path fill-rule="evenodd"
+                                    d="M11.47 2.47a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 1 1-1.06 1.06L12 4.81v14.31a.75.75 0 1 1-1.5 0V4.81L4.03 11.03a.75.75 0 0 1-1.06-1.06l7.5-7.5Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <p id="max-revenue">Loading</p>
+                        </div>
+                    </div>
+                    <div
+                        class="w-[50%] border border-gray-400 rounded-lg text-center p-2 py-6 flex flex-col items-center justify-center">
+                        <p class="text-sm text-gray-600">Minimum Revenue</p>
+                        <div class="text-center flex-1 text-xl font-bold text-blue-800 flex flex-row items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-5 h-5 inline-block align-middle text-red-500 mr-2">
+                                <path fill-rule="evenodd"
+                                    d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.44l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <p id="min-revenue">Loading</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Left Middle 1 -->
@@ -249,7 +278,7 @@
             </div>
 
             <!-- Bottom Right -->
-            <div class="grid-item bottom-right">
+            <div class="grid-item bottom-right pr-5">
                 <iframe src="/chart/monthly_revenue_forecast_sarimax"
                     style="width:100%;height:100%;border:none;display:block;" allowfullscreen loading="lazy"
                     referrerpolicy="no-referrer" title="Monthly Revenue Forecast (SARIMAX)"></iframe>
@@ -269,7 +298,7 @@
                 <h2 class="text-2xl font-extrabold mb-4 tracking-tight">📊 Dataset Overview</h2>
                 <p class="leading-relaxed text-[1rem]">
                     This dataset contains sales transaction data for
-                    <img src="static/nestle text.png" alt="Nestle" class="inline w-[100px] align-baseline mx-2" />
+                    <img src="../assets/img/nestle text.png" alt="Nestle" class="inline w-[100px] align-baseline mx-2" />
                     across various locations and sales mediums, covering three years from <strong>2018</strong> to
                     <strong>2020</strong>.
                     It includes detailed information about each sale, including the product name, revenue generated,
@@ -358,62 +387,71 @@
     <div id="analytics" class="w-full flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
         <div class="max-w-screen-2xl mx-auto px-6 grid grid-cols-12 gap-4 items-start">
 
-            <!-- Top Stats Boxes -->
             <div
-                class="col-span-12 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 text-yellow-900 font-bold text-2xl p-2 rounded-xl text-center shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+                class="col-span-12 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 text-yellow-900 font-bold text-2xl p-2 rounded-xl text-center shadow-md flex justify-around items-center">
 
-                lagay buttons
+                <button onclick="updateContent(0)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-pin-map"></i>
+                </button>
+
+                <button onclick="updateContent(1)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-bar-chart-line"></i>
+                </button>
+                <button onclick="updateContent(2)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-bar-chart-line"></i>
+                </button>
+                <button onclick="updateContent(3)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-file-bar-graph"></i>
+                </button>
+                <button onclick="updateContent(4)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-pie-chart"></i>
+                </button>
+                <button onclick="updateContent(5)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-graph-up"></i>
+                </button>
+                <button onclick="updateContent(6)"
+                    class="transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg cursor-pointer">
+                    <i class="bi bi-graph-up"></i>
+                </button>
+
             </div>
 
-            <!-- Key Points -->
             <div
                 class="col-span-3 bg-yellow-100 border border-yellow-300 p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-yellow-100">
                 <h2 class="text-base font-bold text-yellow-900 mb-2">KEY POINTS:</h2>
-                <ul
-                    class="text-sm font-semibold text-gray-800 leading-snug list-disc list-inside space-y-1 text-justify">
-                    <li>The Lorem ipsum filling text is used by graphic designers,</li>
-                    <li>programmers and printers with the aim of occupying the spaces of a website, an advertising</li>
-                    <li>product or an editorial production whose final text is not yet ready.</li>
-                    <li>This expedient serves to get an idea of the finished product that will soon</li>
-                    <li>be available through the platform or publication channel.</li>
-                    <li>product or an editorial production whose final text is not yet ready.</li>
-                    <li>This expedient serves to get an idea of the finished product that will soon</li>
-                    <li>product or an editorial production whose final text is not yet ready.</li>
-                    <li>This expedient serves to get an idea of the finished product that will soon</li>
-                </ul>
-            </div>
-
-            <!-- Total Revenue Sales -->
-            <div
-                class="col-span-6 bg-[radial-gradient(ellipse_at_center,_white,_#1e3a8a)] hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 p-4 rounded-xl h-[25rem] flex flex-col">
-                <h1 class="text-lg font-bold text-white mb-2 text-center">TOTAL REVENUE SALES BY LOCATION</h1>
-                <div class="flex-1 flex justify-center items-center bg-white rounded-xl">
-                    <iframe src="/chart/monthly_sales_trend"
-                        style="width:100%;height:100%;border:none;display:block; transform: scale(0.95)" allowfullscreen
-                        loading="lazy" referrerpolicy="no-referrer" title="Total Revenue Sales by Location"></iframe>
-                </div>
-            </div>
-
-            <!-- Data Summary -->
-            <div
-                class="col-span-3 bg-yellow-100 border border-yellow-300 p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 overflow-y-auto h-[25rem] custom-scroll">
-                <h2 class="text-base font-bold text-yellow-900 mb-2">DATA SUMMARY:</h2>
-                <p class="text-sm font-semibold text-gray-800 leading-snug">
-                    The Lorem ipsum filling text is used by graphic designers, programmers and printers with the aim of
-                    occupying
-                    the spaces of a website, an advertising product or an editorial production whose final text is not
-                    yet ready.
-                    This expedient serves to get an idea of the finished product that will soon be printed or
-                    disseminated via
-                    digital channels. The Lorem ipsum filling text is used by graphic designers, programmers and
-                    printers with the
-                    aim of occupying the spaces of a website, an advertising product. This sample section allows preview
-                    of layout
-                    impact.
+                <p class="text-sm font-semibold text-gray-800 leading-snug" id="key-points">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus consectetur possimus incidunt
+                    vero ipsa tenetur? Quibusdam cupiditate similique molestiae ut.
                 </p>
             </div>
 
-            <!-- Insights Box -->
+            <div
+                class="col-span-6 bg-[radial-gradient(ellipse_at_center,_white,_#1e3a8a)] hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 p-4 rounded-xl h-[25rem] flex flex-col">
+                <h1 class="text-lg font-bold text-white mb-2 text-center" id='chart-heading'></h1>
+                <div class="flex-1 flex justify-center items-center bg-white rounded-xl overflow-hidden">
+                    <iframe src="/chart/three_year_sales_trend"
+                        style="width:100%;height:100%;border:none;display:block;" allowfullscreen loading="lazy"
+                        referrerpolicy="no-referrer" title="Total Revenue Sales by Location"
+                        id='analytics-iframe'></iframe>
+                </div>
+            </div>
+
+            <div
+                class="col-span-3 bg-yellow-100 border border-yellow-300 p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 overflow-y-auto h-[25rem] custom-scroll">
+                <h2 class="text-base font-bold text-yellow-900 mb-2">DATA SUMMARY:</h2>
+                <p class="text-sm font-medium text-justify text-gray-800 leading-snug" id='data-summary'>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero quae vitae, suscipit non possimus
+                    ratione recusandae laboriosam soluta amet enim! Rem doloremque incidunt ea voluptatibus adipisci
+                    similique, iusto blanditiis facilis.
+                </p>
+            </div>
+
             <div
                 class="col-span-12 bg-gradient-to-br from-blue-800 to-blue-600 text-white p-6 rounded-xl mt-2 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300">
                 <h3 class="flex items-center gap-2 text-xl font-semibold mb-2">
@@ -422,8 +460,8 @@
                     </svg>
                     INSIGHTS
                 </h3>
-                <p class="text-base leading-relaxed">
-                    The <strong>Lorem ipsum filling text</strong> is used by graphic designers, programmers and printers
+                <p class="text-base leading-relaxed" id='insights'>
+                    The **Lorem ipsum filling text** is used by graphic designers, programmers and printers
                     with the
                     aim of occupying the spaces of a website, an advertising product or an editorial production whose
                     final text is
@@ -504,7 +542,7 @@
                     <div class="flip-card-back bg-gradient-to-br from-blue-500 to-blue-800 text-white shadow-2xl">
                         <h3 class="text-lg font-bold mb-4 px-4">Web Developer</h3>
                         <p class="text-sm leading-relaxed px-4">
-                            Responsible for the Web Developer for this Nestle project. He is responsible for building
+                            Responsible for the web development for this Nestle project. He is responsible for building
                             the entire website, from the backend infrastructure that handles data and logic to the
                             frontend interface that users interact with.
                         </p>
