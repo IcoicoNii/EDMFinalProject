@@ -22,7 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100dvh;
-    background-color: #f0f0f0;
+    background-color: #f8f8f8;
     flex-direction: column;
 }
 
@@ -146,16 +146,15 @@ footer {
 
 
 .grid-container {
-    border: solid;
+    /* border: solid; */
     display: grid;
     gap: 10px;
-    margin-top: 80px;
+    /* margin-top: 80px; */
     /* Space between grid items */
     width: 100%;
-    min-height: 83dvh;
     /* Adjust as needed */
     /* background-color: white; */
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     /* Overall container border */
     box-sizing: border-box;
     /* Include padding and border in the element's total width and height */
@@ -239,6 +238,184 @@ footer {
     grid-column: 3 / 4;
     grid-row: 3 / 6;
 }
+
+/* ============================================
+   👥 Flip Cards for About Section
+============================================ */
+.flip-card {
+  perspective: 1200px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+}
+
+.flip-card-front {
+  background-color: #fff;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ============================================
+   📈 individual graphs
+============================================ */
+/* General Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(224, 224, 224);
+  border-radius: 8px;
+  border: 2px solid rgb(224, 224, 224);
+}
+
+/* Sidebar Containers */
+.sidebar-box {
+  background-color: #fef9c3;
+  border: 1px solid #fde68a;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.sidebar-heading {
+  color: #854d0e;
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar-list {
+  font-size: 1rem;
+  color: #374151;
+  list-style-type: disc;
+  list-style-position: inside;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  line-height: 1.6;
+}
+
+.sidebar-text {
+  font-size: 1rem;
+  color: #374151;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Chart Area */
+.chart-area {
+  background-color: #1e3a8a;
+  border-radius: 1rem;
+  height: 500px;
+  padding: 1rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 1rem 0;
+  letter-spacing: 0.05em;
+}
+
+.chart-placeholder {
+  flex-grow: 1;
+  width: 100%;
+  background-color: #1e40af;
+  border-radius: 0.75rem;
+}
+
+/* Insight Section */
+.insight-box {
+  background: linear-gradient(to right, #1e40af, #1d4ed8);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.insight-heading {
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.insight-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* SVG Icon */
+.icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: #fcd34d;
+}
+
+/* Dashboard Button */
+.dashboard-btn {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1.125rem;
+  transition: background 0.3s;
+}
+
+.dashboard-btn:hover {
+  background-color: #2563eb;
+}
+
+
+
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {

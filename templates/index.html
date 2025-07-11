@@ -8,6 +8,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- 🖋️ Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+    <!-- 🎨 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -94,6 +100,8 @@
                         class="text-white hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Home</a>
                     <a href="#dashboard"
                         class="text-white hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Dashboard</a>
+                    <a href="#dataset"
+                        class="text-white hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Dataset</a>
                     <a href="#analytics"
                         class="text-white hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Analytics</a>
                     <a href="#about"
@@ -116,6 +124,8 @@
                     class="block text-white hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="#dashboard"
                     class="block text-white hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+                <a href="#dataset"
+                    class="text-white hover:text-blue-600 px-3 py-2 rounded-md text-lg font-medium">Dataset</a>
                 <a href="#analytics"
                     class="block text-white hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium">Analysis</a>
                 <a href="#about"
@@ -124,12 +134,11 @@
         </div>
     </nav>
 
-    <div class="h-16"></div>
+    <!-- <div class="h-16"></div> -->
 
 
     <!-- DASHBOARD -->
-    <div id="dashboard"
-        class="w-full min-h-[100dvh] flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
+    <div id="dashboard" class="w-full flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
         <div class="grid-container">
 
             <div class="grid-item header-top-left">
@@ -139,30 +148,64 @@
             <!-- Left Middle 1 -->
             <div class="grid-item left-middle-1">
                 <iframe src="/chart/sales_transaction_by_channel"
-                    style="width:100%;height:100%;border:none;display:block;"
-                    allowfullscreen loading="lazy" referrerpolicy="no-referrer"
-                    title="Daily Revenue Trend"></iframe>
+                    style="width:100%;height:100%;border:none;display:block;" allowfullscreen loading="lazy"
+                    referrerpolicy="no-referrer" title="Daily Revenue Trend"></iframe>
                 <!-- Upper Left -->
             </div>
 
             <!-- Header Middle 2 (This name is a bit confusing, but keeping it as is from your CSS) -->
             <div class="grid-item header-middle-middle-2">
                 <div class="flex flex-row w-full justify-center items-center gap-2">
-                    <div class="w-1/2 border border-gray-400 rounded-lg text-center p-2">
+                    <div
+                        class="w-1/2 border border-gray-400 rounded-lg text-center p-2 py-6 flex flex-col items-center justify-center">
                         <p class="text-sm text-gray-600">Total Revenue</p>
-                        <span id="kpi-total-revenue" class="text-xl font-bold text-blue-800">Loading...</span>
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6 text-green-600">
+                                <path fill-rule="evenodd"
+                                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6a.75.75 0 0 0 .75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span id="kpi-total-revenue" class="text-xl font-bold text-blue-800">Loading...</span>
+                        </div>
                     </div>
-                    <div class="w-1/2 border border-gray-400 rounded-lg text-center p-2">
+                    <div
+                        class="w-1/2 border border-gray-400 rounded-lg text-center p-2 py-6 flex flex-col items-center justify-center">
                         <p class="text-sm text-gray-600">Average Revenue</p>
-                        <span id="kpi-average-revenue" class="text-xl font-bold text-blue-800">Loading...</span>
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6 text-yellow-600">
+                                <path fill-rule="evenodd"
+                                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6a.75.75 0 0 0 .75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span id="kpi-average-revenue" class="text-xl font-bold text-blue-800">Loading...</span>
+                        </div>
                     </div>
-                    <div class="w-1/2 border border-gray-400 rounded-lg text-center p-2">
+                    <div
+                        class="w-1/2 border border-gray-400 rounded-lg text-center p-2 py-6 flex flex-col items-center justify-center">
                         <p class="text-sm text-gray-600">Total Products</p>
-                        <span id="kpi-total-products" class="text-xl font-bold text-blue-800">Loading...</span>
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6 text-purple-600">
+                                <path fill-rule="evenodd"
+                                    d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span id="kpi-total-products" class="text-xl font-bold text-blue-800">Loading...</span>
+                        </div>
                     </div>
-                    <div class="w-1/2 border border-gray-400 rounded-lg text-center p-2">
+                    <div
+                        class="w-1/2 border border-gray-400 rounded-lg text-center p-2 py-6 flex flex-col items-center justify-center">
                         <p class="text-sm text-gray-600">Total Sales</p>
-                        <span id="kpi-total-sales" class="text-xl font-bold text-blue-800">Loading...</span>
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6 text-red-600">
+                                <path
+                                    d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.75 3.75 0 0 0 3.694 2.46l2.558 9.592c.17.638-.147 1.34-1.378 1.34H12a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 0 1.5 0v-.816a.75.75 0 0 0-.75-.75h-1.077a.75.75 0 0 0-.749.695l-.976 4.679a.75.75 0 0 0 .75.805h.75a.75.75 0 0 0 .75-.75v-1.5a.75.75 0 0 0-.75-.75h-.001ZM18 10.5a.75.75 0 0 0-.75-.75H12a.75.75 0 0 0-.75.75v1.5a.75.75 0 0 0 .75.75h5.25a.75.75 0 0 0 .75-.75v-1.5Z" />
+                            </svg>
+                            <span id="kpi-total-sales" class="text-xl font-bold text-blue-800">Loading...</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -178,9 +221,8 @@
             <!-- Left Middle 2 -->
             <div class="grid-item left-middle-2">
                 <iframe src="/chart/sales_distribution_by_product_medium"
-                    style="width:100%;height:100%;border:none;display:block;"
-                    allowfullscreen loading="lazy" referrerpolicy="no-referrer"
-                    title="Product Count Distribution by Product"></iframe>
+                    style="width:100%;height:100%;border:none;display:block;" allowfullscreen loading="lazy"
+                    referrerpolicy="no-referrer" title="Product Count Distribution by Product"></iframe>
                 <!-- Middle Left -->
             </div>
 
@@ -191,17 +233,16 @@
                     title="Three Year Sales Trend by Product"></iframe>
             </div>
 
-            <!-- Right Middle 2 -->
+            <!-- Right Middle 2
             <div class="grid-item right-middle-2">
                 <iframe src="/chart/sales_by_state_map" style="width:100%;height:100%;border:none;display:block;"
                     allowfullscreen loading="lazy" referrerpolicy="no-referrer" title="Sales by State Map"></iframe>
                 TO BE CONTINUED
-            </div>
+            </div> -->
 
             <!-- Bottom Middle -->
             <div class="grid-item bottom-middle">
-                <iframe src="/chart/monthly_sales_trend"
-                    style="width:100%;height:100%;border:none;display:block;"
+                <iframe src="/chart/monthly_sales_trend" style="width:100%;height:100%;border:none;display:block;"
                     allowfullscreen loading="lazy" referrerpolicy="no-referrer"
                     title="Total Product Count by Sales Location"></iframe>
                 <!-- Bottom Center -->
@@ -209,23 +250,189 @@
 
             <!-- Bottom Right -->
             <div class="grid-item bottom-right">
-                <!-- <iframe src="/chart/sales_by_state_map"
-                    style="width:100%;height:100%;border:none;display:block;"
-                    allowfullscreen loading="lazy" referrerpolicy="no-referrer"
-                    title="Sales by State Map"></iframe> -->
-                Bottom Right
+                <iframe src="/chart/monthly_revenue_forecast_sarimax"
+                    style="width:100%;height:100%;border:none;display:block;" allowfullscreen loading="lazy"
+                    referrerpolicy="no-referrer" title="Monthly Revenue Forecast (SARIMAX)"></iframe>
+                <!-- Bottom Right -->
             </div>
         </div>
     </div>
 
-    <!-- ANALYTICS -->
-    <div id="analytics"
-        class="border w-full min-h-[100dvh] flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
+    <!-- DATASET -->
+    <div id="dataset" class="w-full flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
 
-        LEAVE BLANK FOR NOW
+        <div class="max-w-[95%] xl:max-w-[1600px] mx-auto px-6">
 
+            <!-- Header Section -->
+            <div
+                class="mx-15 bg-gradient-to-br from-blue-300 mb-3 to-blue-600 text-white p-10 rounded-3xl drop-shadow-box-blue hover:shadow-2xl transition duration-300">
+                <h2 class="text-2xl font-extrabold mb-4 tracking-tight">📊 Dataset Overview</h2>
+                <p class="leading-relaxed text-[1rem]">
+                    This dataset contains sales transaction data for
+                    <img src="static/nestle text.png" alt="Nestle" class="inline w-[100px] align-baseline mx-2" />
+                    across various locations and sales mediums, covering three years from <strong>2018</strong> to
+                    <strong>2020</strong>.
+                    It includes detailed information about each sale, including the product name, revenue generated,
+                    sales medium/channel, and quantity sold.
+                </p>
+            </div>
 
+            <!-- Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mx-15">
+
+                <!-- Summary -->
+                <div
+                    class="bg-gradient-to-br from-yellow-200 to-yellow-400 text-yellow-900 p-8 rounded-3xl drop-shadow-box-yellow hover:scale-[1.02] hover:shadow-2xl transition duration-300 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="bi bi-table text-3xl"></i>
+                        <h3 class="text-2xl font-bold">Summary</h3>
+                    </div>
+                    <p class="text-lg font-medium">🧾 Rows: <strong>18,115</strong></p>
+                    <p class="text-lg font-medium mt-1">📊 Columns: <strong>9</strong></p>
+                    <i class="bi bi-bar-chart-line-fill absolute bottom-3 right-4 text-[4rem] text-yellow-700/20"></i>
+                </div>
+
+                <!-- Source -->
+                <div
+                    class="bg-gradient-to-br from-blue-200 to-teal-300 text-white p-4 rounded-3xl drop-shadow-box-blue hover:scale-[1.02] hover:shadow-2xl transition duration-300 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="bi bi-globe2 text-3xl"></i>
+                        <h3 class="text-2xl font-bold">Source</h3>
+                    </div>
+                    <p class="leading-relaxed text-[1rem]">
+                        The dataset was obtained from a publicly available repository hosted on GitHub by
+                        <strong>Hannatu Gwabin</strong>. This dataset is provided as part of a sales analysis project
+                        and contains
+                        structured transaction data for Nestlé product sales across Australia.
+                    </p>
+                    <i class="bi bi-cloud-arrow-down-fill absolute bottom-3 right-4 text-[4rem] text-white/20"></i>
+                </div>
+
+                <!-- Potential Uses -->
+                <div
+                    class="bg-gradient-to-br from-yellow-200 to-yellow-400 text-yellow-900 p-4 rounded-3xl drop-shadow-box-yellow hover:scale-[1.02] hover:shadow-2xl transition duration-300 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="bi bi-lightbulb-fill text-3xl"></i>
+                        <h3 class="text-2xl font-bold">Potential Use</h3>
+                    </div>
+                    <p class="text-[1rem] leading-relaxed">
+                        Analyze the sales performance of Nestlé products by year or region. Compare the effectiveness of
+                        online vs. direct sales.
+                        Evaluate customer preference trends over time and generate insights for regional marketing
+                        strategies.
+                    </p>
+                    <i class="bi bi-bar-chart-fill absolute bottom-3 right-4 text-[4rem] text-yellow-800/20"></i>
+                </div>
+
+                <!-- Geographic -->
+                <div
+                    class="bg-gradient-to-br from-blue-200 to-teal-300 text-white p-8 rounded-3xl drop-shadow-box-blue hover:scale-[1.02] hover:shadow-2xl transition duration-300 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="bi bi-geo-alt-fill text-3xl"></i>
+                        <h3 class="text-2xl font-bold">Geographic</h3>
+                    </div>
+                    <p class="text-[1rem] leading-relaxed">
+                        Sales data is broken down by <strong>Australian states</strong> and territories, enabling
+                        regional performance insights.
+                        This supports geographic segmentation and comparison between high and low-performing areas.
+                    </p>
+                    <i class="bi bi-map-fill absolute bottom-3 right-4 text-[4rem] text-white/20"></i>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <div class="flex justify-center mt-8">
+                <a href="static/NESTLE SALES DATASET.xlsx" download>
+                    <button
+                        class="px-8 py-3 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 text-xl font-bold shadow-lg border-2 border-yellow-500 hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                        <i class="bi bi-download"></i> Download Dataset
+                    </button>
+                </a>
+            </div>
+
+        </div>
     </div>
+
+
+    <!-- ANALYTICS -->
+    <div id="analytics" class="w-full flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
+        <div class="max-w-screen-2xl mx-auto px-6 grid grid-cols-12 gap-4 items-start">
+
+            <!-- Top Stats Boxes -->
+            <div
+                class="col-span-12 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-400 text-yellow-900 font-bold text-2xl p-2 rounded-xl text-center shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+
+                lagay buttons
+            </div>
+
+            <!-- Key Points -->
+            <div
+                class="col-span-3 bg-yellow-100 border border-yellow-300 p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 h-[25rem] overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-yellow-100">
+                <h2 class="text-base font-bold text-yellow-900 mb-2">KEY POINTS:</h2>
+                <ul
+                    class="text-sm font-semibold text-gray-800 leading-snug list-disc list-inside space-y-1 text-justify">
+                    <li>The Lorem ipsum filling text is used by graphic designers,</li>
+                    <li>programmers and printers with the aim of occupying the spaces of a website, an advertising</li>
+                    <li>product or an editorial production whose final text is not yet ready.</li>
+                    <li>This expedient serves to get an idea of the finished product that will soon</li>
+                    <li>be available through the platform or publication channel.</li>
+                    <li>product or an editorial production whose final text is not yet ready.</li>
+                    <li>This expedient serves to get an idea of the finished product that will soon</li>
+                    <li>product or an editorial production whose final text is not yet ready.</li>
+                    <li>This expedient serves to get an idea of the finished product that will soon</li>
+                </ul>
+            </div>
+
+            <!-- Total Revenue Sales -->
+            <div
+                class="col-span-6 bg-[radial-gradient(ellipse_at_center,_white,_#1e3a8a)] hover:shadow-2xl hover:scale-[1.01] transition-all duration-300 p-4 rounded-xl h-[25rem] flex flex-col">
+                <h1 class="text-lg font-bold text-white mb-2 text-center">TOTAL REVENUE SALES BY LOCATION</h1>
+                <div class="flex-1 flex justify-center items-center bg-white rounded-xl">
+                    <iframe src="/chart/monthly_sales_trend"
+                        style="width:100%;height:100%;border:none;display:block; transform: scale(0.95)" allowfullscreen
+                        loading="lazy" referrerpolicy="no-referrer" title="Total Revenue Sales by Location"></iframe>
+                </div>
+            </div>
+
+            <!-- Data Summary -->
+            <div
+                class="col-span-3 bg-yellow-100 border border-yellow-300 p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.01] transition-all duration-300 overflow-y-auto h-[25rem] custom-scroll">
+                <h2 class="text-base font-bold text-yellow-900 mb-2">DATA SUMMARY:</h2>
+                <p class="text-sm font-semibold text-gray-800 leading-snug">
+                    The Lorem ipsum filling text is used by graphic designers, programmers and printers with the aim of
+                    occupying
+                    the spaces of a website, an advertising product or an editorial production whose final text is not
+                    yet ready.
+                    This expedient serves to get an idea of the finished product that will soon be printed or
+                    disseminated via
+                    digital channels. The Lorem ipsum filling text is used by graphic designers, programmers and
+                    printers with the
+                    aim of occupying the spaces of a website, an advertising product. This sample section allows preview
+                    of layout
+                    impact.
+                </p>
+            </div>
+
+            <!-- Insights Box -->
+            <div
+                class="col-span-12 bg-gradient-to-br from-blue-800 to-blue-600 text-white p-6 rounded-xl mt-2 hover:shadow-2xl hover:scale-[1.01] transition-all duration-300">
+                <h3 class="flex items-center gap-2 text-xl font-semibold mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 13h4v6H4v-6zm6-4h4v10h-4V9zm6-6h4v16h-4V3z" />
+                    </svg>
+                    INSIGHTS
+                </h3>
+                <p class="text-base leading-relaxed">
+                    The <strong>Lorem ipsum filling text</strong> is used by graphic designers, programmers and printers
+                    with the
+                    aim of occupying the spaces of a website, an advertising product or an editorial production whose
+                    final text is
+                    not yet ready.
+                </p>
+            </div>
+        </div>
+    </div>
+
 
     <!-- WORD OF THANKS -->
     <div id="gratitude" class="w-full min-h-[40dvh] flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
@@ -243,12 +450,112 @@
 
 
     <!-- ABOUT US -->
-    <div id="about-us"
-        class=" border w-full min-h-[100dvh] flex flex-row flex-wrap justify-center items-center p-[20px] gap-4">
+    <section class=" text-center w-[80%] max-w-[1440px] mx-auto pt-5 mb-10" id="about">
+        <!-- Logo and Description -->
+        <div class="mb-5">
+            <div class="flex items-center justify-center mb-2">
+                <div class="border-t-[1px] border-gray-400 w-52 mr-4"></div>
+                <img src="../assets/img/powerba logo.png" alt="Power BA Logo" class="w-[20rem] sm:w-[25rem]">
+                <div class="border-t-[1px] border-gray-400 w-52 ml-4"></div>
+            </div>
+            <p class="text-md sm:text-1xl text-gray-700 max-w-5xl mx-auto leading-relaxed text-center">
+                <strong class="font-semibold">Power BA</strong>
+                <span class="font-light">
+                    is a team of BS Information Technology students majoring in Business Analytics from FEU Tech,
+                    Section TB22. The group is composed of Chelsee L. Bustos, Teodorico P. Carpio Jr., Jefferson
+                    Petronio, and Cassey P. Panganiban, working together to develop a data-driven web project for
+                    Nestle.
+                </span>
+            </p>
 
 
+        </div>
 
-    </div>
+        <!-- Member Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 justify-center">
+
+            <!-- Chelsee -->
+            <div class="flip-card w-full max-w-[340px] mx-auto">
+                <div class="flip-card-inner group">
+                    <div class="flip-card-front">
+                        <img src="../assets/img/chelseepic.png" alt="Chelsee"
+                            class="w-full h-full object-cover rounded-xl" />
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-2xl">
+                        <h3 class="text-lg font-bold mb-4 px-4">User Design</h3>
+                        <p class="text-sm leading-relaxed px-4">
+                            Responsible for the User Design of the website for the Nestle project. Her focus is on
+                            creating the overall visual appeal and user experience, ensuring the website is intuitive,
+                            aesthetically pleasing, and easy to navigate for users.
+                        </p>
+                    </div>
+                </div>
+                <p class="mt-4 text-xl font-semibold text-center">Chelsee Bustos</p>
+                <p class="text-base text-gray-500 text-center">User Design</p>
+            </div>
+
+            <!-- Teodorico -->
+            <div class="flip-card w-full max-w-[340px] mx-auto">
+                <div class="flip-card-inner group">
+                    <div class="flip-card-front">
+                        <img src="../assets/img/teddyformal.png" alt="Teodorico"
+                            class="w-full h-full object-cover rounded-xl" />
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-blue-500 to-blue-800 text-white shadow-2xl">
+                        <h3 class="text-lg font-bold mb-4 px-4">Web Developer</h3>
+                        <p class="text-sm leading-relaxed px-4">
+                            Responsible for the Web Developer for this Nestle project. He is responsible for building
+                            the entire website, from the backend infrastructure that handles data and logic to the
+                            frontend interface that users interact with.
+                        </p>
+                    </div>
+                </div>
+                <p class="mt-4 text-xl font-semibold text-center">Teodorico Carpio Jr.</p>
+                <p class="text-base text-gray-500 text-center">Web Developer</p>
+            </div>
+
+            <!-- Cassey -->
+            <div class="flip-card w-full max-w-[340px] mx-auto">
+                <div class="flip-card-inner group">
+                    <div class="flip-card-front">
+                        <img src="../assets/img/casseyformal.png" alt="Cassey"
+                            class="w-full h-full object-cover rounded-xl" />
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-2xl">
+                        <h3 class="text-lg font-bold mb-4 px-4">Data Analyst</h3>
+                        <p class="text-sm leading-relaxed px-4">
+                            She is focused on gathering, processing, and analyzing the data that will be used on the
+                            website, specifically concentrating on creating the graphs and ensuring the accuracy and
+                            relevance of the data presented.
+                        </p>
+                    </div>
+                </div>
+                <p class="mt-4 text-xl font-semibold text-center">Cassey Panganiban</p>
+                <p class="text-base text-gray-500 text-center">Data Analyst</p>
+            </div>
+
+            <!-- Jefferson -->
+            <div class="flip-card w-full max-w-[340px] mx-auto">
+                <div class="flip-card-inner group">
+                    <div class="flip-card-front">
+                        <img src="../assets/img/jeffformal.png" alt="Jefferson"
+                            class="w-full h-full object-cover rounded-xl" />
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-blue-600 to-blue-900 text-white shadow-2xl">
+                        <h3 class="text-lg font-bold mb-4 px-4">Data Analyst</h3>
+                        <p class="text-sm leading-relaxed px-4">
+                            A data analyst with a specific focus on the visualization of the data. He works closely with
+                            Cassey to take the analyzed data and transform it into clear, insightful, and engaging
+                            visual representations for the website.
+                        </p>
+                    </div>
+                </div>
+                <p class="mt-4 text-xl font-semibold text-center">Jefferson Petronio</p>
+                <p class="text-base text-gray-500 text-center">Data Analyst</p>
+            </div>
+
+        </div>
+    </section>
 
 
 

@@ -66,28 +66,72 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeObserver.observe(carouselContainer);
 });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/kpi_data')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error('Error fetching KPI data:', data.error);
-                        document.getElementById('kpi-total-revenue').innerText = 'N/A';
-                        document.getElementById('kpi-average-revenue').innerText = 'N/A';
-                        document.getElementById('kpi-total-products').innerText = 'N/A';
-                        document.getElementById('kpi-total-sales').innerText = 'N/A';
-                    } else {
-                        document.getElementById('kpi-total-revenue').innerText = data.total_revenue;
-                        document.getElementById('kpi-average-revenue').innerText = data.average_revenue;
-                        document.getElementById('kpi-total-products').innerText = data.total_unique_products;
-                        document.getElementById('kpi-total-sales').innerText = data.total_sales_count;
-                    }
-                })
-                .catch(error => {
-                    console.error('Network or parsing error:', error);
-                    document.getElementById('kpi-total-revenue').innerText = 'Error';
-                    document.getElementById('kpi-average-revenue').innerText = 'Error';
-                    document.getElementById('kpi-total-products').innerText = 'Error';
-                    document.getElementById('kpi-total-sales').innerText = 'Error';
-                });
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/kpi_data')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Error fetching KPI data:', data.error);
+                document.getElementById('kpi-total-revenue').innerText = 'N/A';
+                document.getElementById('kpi-average-revenue').innerText = 'N/A';
+                document.getElementById('kpi-total-products').innerText = 'N/A';
+                document.getElementById('kpi-total-sales').innerText = 'N/A';
+            } else {
+                document.getElementById('kpi-total-revenue').innerText = data.total_revenue;
+                document.getElementById('kpi-average-revenue').innerText = data.average_revenue;
+                document.getElementById('kpi-total-products').innerText = data.total_unique_products;
+                document.getElementById('kpi-total-sales').innerText = data.total_sales_count;
+            }
+        })
+        .catch(error => {
+            console.error('Network or parsing error:', error);
+            document.getElementById('kpi-total-revenue').innerText = 'Error';
+            document.getElementById('kpi-average-revenue').innerText = 'Error';
+            document.getElementById('kpi-total-products').innerText = 'Error';
+            document.getElementById('kpi-total-sales').innerText = 'Error';
         });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const navbar = document.getElementById('navbar');
+
+    // Toggle mobile navigation menu
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('hidden');
+        navMenu.classList.toggle('opacity-0');
+        navMenu.classList.toggle('scale-95');
+        navMenu.classList.toggle('open'); // Add/remove 'open' class for transition
+    });
+
+    // Smooth scroll with offset for all navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default anchor click behavior
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                const navbarHeight = navbar.offsetHeight; // Get the current height of the navbar
+                // Calculate the position to scroll to, subtracting the navbar height
+                const offsetPosition = targetElement.offsetTop - navbarHeight;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth' // Smooth scrolling effect
+                });
+
+                // Close mobile menu after clicking a link
+                if (!navMenu.classList.contains('hidden')) {
+                    navMenu.classList.add('hidden');
+                    navMenu.classList.add('opacity-0');
+                    navMenu.classList.add('scale-95');
+                    navMenu.classList.remove('open');
+                }
+            }
+        });
+    });
+});
