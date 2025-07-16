@@ -305,14 +305,16 @@ def total_sales_revenue_by_product_data():
 
 
 # PIE CHART UPPER LEFT
-@app.route('/chart/sales_transaction_by_channel') # Renamed function to reflect it's a chart route
+from flask import request # Make sure to import request
+
+@app.route('/chart/sales_transaction_by_channel')
 def sales_transaction_by_channel_chart():
     print(f"DEBUG: Entering sales_transaction_by_channel_chart.")
     print(f"DEBUG: Type of df at start of function: {type(df)}")
     print(f"DEBUG: Is df empty? {df.empty if isinstance(df, pd.DataFrame) else 'Not a DataFrame'}")
     if isinstance(df, pd.DataFrame) and not df.empty:
         print(f"DEBUG: df columns: {df.columns.tolist()}")
-    
+
     # Ensure df is a DataFrame and not empty
     if not isinstance(df, pd.DataFrame) or df.empty:
         return "<div>Error: Data not loaded or available for Sales Transaction by Channel.</div>", 500
@@ -342,12 +344,26 @@ def sales_transaction_by_channel_chart():
 
         # Prepare data for go.Pie, ensuring order
         # Sort by 'Sales Medium' to ensure consistent color mapping and display order
-        # This step is crucial for consistent color application when using go.Pie with explicit colors
         sales_medium_counts = sales_medium_counts.sort_values(by='Sales Medium', ascending=True)
 
         labels = sales_medium_counts['Sales Medium'].tolist()
         values = sales_medium_counts['count'].tolist()
         colors = [color_map.get(label, '#CCCCCC') for label in labels] # Fallback color if not in map
+
+        # --- Start of Highlight Logic ---
+        highlight_channel = request.args.get('highlight')
+        pull_values = [0] * len(labels) # Initialize all pull values to 0 (no pull)
+
+        if highlight_channel and highlight_channel in labels:
+            try:
+                # Find the index of the channel to highlight
+                highlight_index = labels.index(highlight_channel)
+                pull_values[highlight_index] = 0.1 # Pull out the slice by 10%
+                print(f"DEBUG: Highlighting '{highlight_channel}'. Pull value set for index {highlight_index}.")
+            except ValueError:
+                # Should not happen if highlight_channel is checked against labels
+                print(f"DEBUG: Highlight channel '{highlight_channel}' not found in labels, no pull applied.")
+        # --- End of Highlight Logic ---
 
         # Create the donut chart using plotly.graph_objects
         fig = go.Figure(data=[go.Pie(
@@ -360,7 +376,8 @@ def sales_transaction_by_channel_chart():
             textfont_color='white', # Set text color to white
             marker=dict(line=dict(color='#FFFFFF', width=1)), # Add white border to slices
             hovertemplate='<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>',
-            insidetextorientation='horizontal' # Make labels horizontal (not slanted)
+            insidetextorientation='horizontal', # Make labels horizontal (not slanted)
+            pull=pull_values # Apply the pull effect here
         )])
         print("DEBUG: Plotly figure created using go.Figure.")
 
@@ -413,7 +430,7 @@ def sales_distribution_by_product_medium_chart():
 
         # Step 3: Set a specific order for products on the Y-axis to match the desired presentation
         product_order = [
-            'Smarties', 'Nesquik Duo', 'Nescafe Gold', 'Nescau',
+            'Smarties', 'Nesquik Duo', 'Nescafe Gold', 'Nes Cau',
             'Maggi', 'Milo', 'Kit Kat', 'Nestle Drumstick', 'Nescafe'
         ]
         product_sales['Product Name'] = pd.Categorical(product_sales['Product Name'], categories=product_order, ordered=True)
